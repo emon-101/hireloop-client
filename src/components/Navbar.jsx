@@ -49,19 +49,21 @@ export default function Navbar() {
         </div>
 
         {/* Desktop Actions */}
-        <div className="hidden items-center gap-6 lg:flex">
+        <div className="hidden items-center lg:flex">
           <ThemeToggle />
+
+          {/* Divider */}
+          <div className="mx-5 h-6 w-px bg-divider" />
+
           <Link
             href="/login"
-            className="font-medium text-violet-500 transition hover:text-violet-400"
-          >
+            className="font-medium text-primary transition-colors hover:opacity-80">
             Sign In
           </Link>
 
           <Button
             radius="lg"
-            className="bg-linear-to-r from-violet-600 to-indigo-500 px-6 text-white"
-          >
+            className="ml-5 bg-linear-to-r from-violet-600 to-indigo-500px-6 text-white">
             Get Started
           </Button>
         </div>
@@ -69,7 +71,8 @@ export default function Navbar() {
         {/* Mobile Toggle */}
         <button
           onClick={() => setOpen(!open)}
-          className="text-foreground lg:hidden"
+          className="lg:hidden flex items-center justify-center text-foreground hover:text-primary transition-colors hover:cursor-pointer"
+          aria-label="Toggle Menu"
         >
           {open ? <X size={28} /> : <Menu size={28} />}
         </button>

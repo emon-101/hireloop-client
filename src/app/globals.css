@@ -1,19 +1,2 @@
 @import "tailwindcss";
 @import "@heroui/styles";
-
-html,
-body {
-  min-height: 100%;
-}
-
-body {
-  @apply bg-black text-white;
-}
-
-.dark {
-  color-scheme: dark;
-}
-
-.light {
-  color-scheme: light;
-}
