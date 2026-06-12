@@ -3,6 +3,7 @@ import CTASection from "@/components/CTASection";
 import FeaturedCompanies from "@/components/FeaturedCompanies";
 import JobCategories from "@/components/JobCategories";
 import LatestJobs from "@/components/LatestJobs";
+import PricingSection from "@/components/PricingSection";
 import WhyChooseHireLoop from "@/components/WhyChooseHireLoop";
 
 export default function Home() {
@@ -13,6 +14,7 @@ export default function Home() {
       <JobCategories />
       <LatestJobs />
       <WhyChooseHireLoop />
+      <PricingSection />
       <CTASection />
     </div>
   );
