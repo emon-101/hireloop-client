@@ -69,22 +69,6 @@ export default function Footer() {
 
   return (
     <footer className="bg-background pt-10">
-      <section className="mx-auto max-w-7xl px-6 py-20">
-        <div className="rounded-3xl border border-divider bg-content1 p-10 text-center">
-          <h2 className="text-4xl font-bold">
-            Ready to find your next opportunity?
-          </h2>
-
-          <p className="mt-4 text-foreground/70">
-            Join thousands of professionals and companies already using
-            HireLoop.
-          </p>
-
-          <button className="mt-8 rounded-xl bg-primary px-6 py-3 text-white">
-            Get Started
-          </button>
-        </div>
-      </section>
       <div className="mx-auto max-w-7xl px-6 py-16">
         <div className="grid gap-12 lg:grid-cols-5">
           {/* Brand */}
