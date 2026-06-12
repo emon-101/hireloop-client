@@ -68,7 +68,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="border-t border-divider bg-background pt-10">
+    <footer className="bg-background pt-10">
       <section className="mx-auto max-w-7xl px-6 py-20">
         <div className="rounded-3xl border border-divider bg-content1 p-10 text-center">
           <h2 className="text-4xl font-bold">
