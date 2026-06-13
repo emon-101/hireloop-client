@@ -5,9 +5,13 @@ import { Button } from "@heroui/react";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import ThemeToggle from "./ThemeToggle";
+import { authClient } from "@/lib/auth-client";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+
+  const {data: session} = authClient.useSession();
+  console.log(session?.user);
 
   const navLinks = [
     {
