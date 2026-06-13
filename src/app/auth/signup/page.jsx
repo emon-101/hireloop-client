@@ -9,6 +9,8 @@ import {
   Input,
   Label,
   TextField,
+  Radio,
+  RadioGroup,
 } from "@heroui/react";
 import { FcGoogle } from "react-icons/fc";
 import { toast } from "sonner";
@@ -29,29 +31,24 @@ const RegisterPage = () => {
       email: formData.get("email"),
       photoURL: formData.get("photoURL"),
       password: formData.get("password"),
+      role: formData.get("role")
     };
 
     const password = userData.password;
 
     // Password Validation
     if (password.length < 6) {
-      setPasswordError(
-        "Password must be at least 6 characters long."
-      );
+      setPasswordError("Password must be at least 6 characters long.");
       return;
     }
 
     if (!/[A-Z]/.test(password)) {
-      setPasswordError(
-        "Password must contain at least one uppercase letter."
-      );
+      setPasswordError("Password must contain at least one uppercase letter.");
       return;
     }
 
     if (!/[a-z]/.test(password)) {
-      setPasswordError(
-        "Password must contain at least one lowercase letter."
-      );
+      setPasswordError("Password must contain at least one lowercase letter.");
       return;
     }
 
@@ -63,6 +60,7 @@ const RegisterPage = () => {
         email: userData.email,
         password: userData.password,
         image: userData.photoURL,
+        role: userData.role
       });
 
       if (error) {
@@ -116,14 +114,11 @@ const RegisterPage = () => {
 
           {/* Heading */}
           <div className="mb-8 text-center">
-            <h2 className="text-3xl font-bold">
-              Create Your Account
-            </h2>
+            <h2 className="text-3xl font-bold">Create Your Account</h2>
 
             <p className="mt-2 text-default-500">
-              Join thousands of professionals and
-              discover opportunities from top companies
-              worldwide.
+              Join thousands of professionals and discover opportunities from
+              top companies worldwide.
             </p>
           </div>
 
@@ -133,10 +128,7 @@ const RegisterPage = () => {
             <TextField name="name" isRequired>
               <Label>Full Name</Label>
 
-              <Input
-                placeholder="John Doe"
-                className="rounded-2xl"
-              />
+              <Input placeholder="John Doe" className="rounded-2xl" />
 
               <FieldError />
             </TextField>
@@ -180,36 +172,50 @@ const RegisterPage = () => {
               <FieldError />
             </TextField>
 
+            {/* Role Selection */}
+            <div className="flex flex-col gap-4">
+              <Label>Subscription plan</Label>
+              <RadioGroup
+                defaultValue="seeker"
+                name="role"
+                orientation="horizontal"
+              >
+                <Radio value="seeker">
+                  <Radio.Control>
+                    <Radio.Indicator />
+                  </Radio.Control>
+                  <Radio.Content>
+                    <Label>Job Seeker</Label>
+                  </Radio.Content>
+                </Radio>
+                <Radio value="recruiter">
+                  <Radio.Control>
+                    <Radio.Indicator />
+                  </Radio.Control>
+                  <Radio.Content>
+                    <Label>Recruiter</Label>
+                  </Radio.Content>
+                </Radio>
+              </RadioGroup>
+            </div>
             {/* Validation Error */}
             {passwordError && (
-              <p className="text-sm text-danger">
-                {passwordError}
-              </p>
+              <p className="text-sm text-danger">{passwordError}</p>
             )}
 
             {/* Password Requirements */}
             <div className="rounded-2xl border border-divider bg-content2 p-4 text-sm">
-              <p className="mb-2 font-medium">
-                Password Requirements
-              </p>
+              <p className="mb-2 font-medium">Password Requirements</p>
 
               <ul className="ml-5 list-disc space-y-1 text-default-600">
                 <li>Minimum 6 characters</li>
-                <li>
-                  At least one uppercase letter
-                </li>
-                <li>
-                  At least one lowercase letter
-                </li>
+                <li>At least one uppercase letter</li>
+                <li>At least one lowercase letter</li>
               </ul>
             </div>
 
             {/* Register Button */}
-            <Button
-              type="submit"
-              color="primary"
-              className="w-full"
-            >
+            <Button type="submit" color="primary" className="w-full">
               Create Account
             </Button>
           </form>
@@ -218,9 +224,7 @@ const RegisterPage = () => {
           <div className="my-6 flex items-center gap-3">
             <div className="flex-1 border-t border-divider" />
 
-            <span className="text-sm text-default-500">
-              OR
-            </span>
+            <span className="text-sm text-default-500">OR</span>
 
             <div className="flex-1 border-t border-divider" />
           </div>
