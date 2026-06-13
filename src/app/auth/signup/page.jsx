@@ -174,7 +174,7 @@ const RegisterPage = () => {
 
             {/* Role Selection */}
             <div className="flex flex-col gap-4">
-              <Label>Subscription plan</Label>
+              <Label>Select Role</Label>
               <RadioGroup
                 defaultValue="seeker"
                 name="role"
