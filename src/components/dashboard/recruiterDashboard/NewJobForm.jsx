@@ -5,7 +5,6 @@ import { Button, Input, Card, Switch, TextArea } from "@heroui/react";
 
 export default function NewJobForm() {
   const [isRemote, setIsRemote] = useState(false);
-
   const jobTypes = [
     "Full-time",
     "Part-time",
@@ -228,16 +227,46 @@ export default function NewJobForm() {
 
           {/* Remote Toggle */}
           <div className="mt-8 rounded-2xl border border-divider bg-content2 p-5">
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between gap-4">
               <div>
-                <h3 className="font-semibold">Remote Position</h3>
+                <h3 className="font-semibold text-lg">Remote Position</h3>
 
                 <p className="mt-1 text-sm text-foreground/60">
                   Enable this if employees can work remotely from anywhere.
                 </p>
               </div>
 
-              <Switch isSelected={isRemote} onValueChange={setIsRemote} />
+              <div className="mt-8 rounded-2xl border border-divider bg-content2 p-5">
+                <div className="flex items-center justify-between gap-4">
+                  <div>
+                    <h3 className="text-lg font-semibold">Remote Position</h3>
+
+                    <p className="mt-1 text-sm text-foreground/60">
+                      Enable this if employees can work remotely from anywhere.
+                    </p>
+                  </div>
+
+                  <Switch isSelected={isRemote} onChange={setIsRemote}>
+                    <Switch.Content>
+                      <Switch.Control>
+                        <Switch.Thumb />
+                      </Switch.Control>
+                    </Switch.Content>
+                  </Switch>
+                </div>
+
+                <div className="mt-4">
+                  <span
+                    className={`rounded-full px-3 py-1 text-xs font-medium ${
+                      isRemote
+                        ? "bg-success/10 text-success"
+                        : "bg-warning/10 text-warning"
+                    }`}
+                  >
+                    {isRemote ? "Remote Enabled" : "Office Required"}
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
 
