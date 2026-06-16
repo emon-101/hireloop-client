@@ -25,7 +25,7 @@ export default function NewJobForm() {
   const currencies = ["USD", "EUR", "GBP", "BDT"];
 
   const selectClass =
-    "w-full rounded-xl border border-divider bg-content1 px-4 py-3 text-sm text-foreground outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20";
+  "w-full rounded-lg border border-default-200 bg-white text-black dark:bg-zinc-900 dark:text-white px-4 py-3";
 
   const handleSubmit = (e) => {
     e.preventDefault();
