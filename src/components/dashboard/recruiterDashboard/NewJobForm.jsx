@@ -414,7 +414,7 @@ export default function NewJobForm() {
           <div className="rounded-2xl border border-divider bg-content2 p-6">
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
               <div>
-                <h3 className="text-lg font-semibold">TechNova Ltd.</h3>
+                <h3 className="text-lg font-semibold">{mockCompany.name}</h3>
 
                 <p className="text-sm text-success">✓ Approved Company</p>
               </div>
