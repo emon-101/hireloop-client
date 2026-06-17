@@ -8,6 +8,12 @@ import { redirect } from "next/navigation";
 
 export default function NewJobForm() {
   const [isRemote, setIsRemote] = useState(false);
+  const [mockCompany] = useState({
+    name: "Acme Corp",
+    id: "company_123",
+    isApproved: true,
+  });
+
   const jobTypes = [
     "Full-time",
     "Part-time",
@@ -33,6 +39,13 @@ export default function NewJobForm() {
   const handleSubmit = async(e) => {
     e.preventDefault();
 
+    if(!mockCompany.isApproved) {
+      toast.error("Your company profile must be approved before you can post jobs.");
+      return;
+    }
+
+    
+
     const formData = new FormData(e.currentTarget);
 
     const jobData = {
@@ -50,6 +63,8 @@ export default function NewJobForm() {
       benefits: formData.get("benefits"),
       remote: isRemote,
       status: "active",
+      companyId: mockCompany.id,
+      isPubliclyVisible: true,
     };
 
     // console.log(jobData);
