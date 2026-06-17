@@ -19,10 +19,11 @@ const industries = [
 
 const employeeRanges = ["1-10", "11-50", "51-200", "201-500", "500+"];
 
-export default function CompanyForm() {
+export default function CompanyForm({recruiter, company}) {
   const [logoPreview, setLogoPreview] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [logoError, setLogoError] = useState("");
+
 
   const selectClass =
     "w-full rounded-2xl border border-divider bg-content1 px-4 py-3 text-sm outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20 dark:bg-content1 dark:text-foreground dark:bg-zinc-900 dark:text-white";
@@ -52,6 +53,7 @@ export default function CompanyForm() {
 
       // 1. Upload logo to ImageBB
       const logoFile = formData.get("logo");
+      console.log(logoFile);
 
       let logoUrl = "";
 
@@ -82,7 +84,8 @@ export default function CompanyForm() {
         employeeCount: formData.get("employeeCount"),
         description: formData.get("description"),
         logo: logoUrl,
-        status: "pending",
+        status: company ? company.status : 'pending',
+        recruiterId: recruiter?.id,
       };
 
       console.log(companyData);

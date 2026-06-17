@@ -5,12 +5,12 @@ import { useState } from "react";
 import CompanyForm from "./CompanyForm";
 import Image from "next/image";
 
-export default function CompanyProfile({ company }) {
+export default function CompanyProfile({ recruiter, company }) {
   const [editMode, setEditMode] = useState(false);
-
   if (editMode) {
     return (
       <CompanyForm
+        recruiter={recruiter}
         company={company}
         isEdit={true}
       />

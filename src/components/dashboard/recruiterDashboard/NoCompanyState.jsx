@@ -4,11 +4,11 @@ import { Button, Card } from "@heroui/react";
 import { useState } from "react";
 import CompanyForm from "./CompanyForm";
 
-export default function NoCompanyState() {
+export default function NoCompanyState({recruiter, company}) {
   const [showForm, setShowForm] = useState(false);
 
   if (showForm) {
-    return <CompanyForm />;
+    return <CompanyForm recruiter={recruiter} company={company} />;
   }
 
   return (
