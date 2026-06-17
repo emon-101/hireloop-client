@@ -71,7 +71,7 @@ export default function NewJobForm() {
     const res = await createJob(jobData);
     if(res.insertedId) {
       toast.success("Job posted successfully!");
-      redirect('/dashboard/recruiter');
+      redirect('/dashboard/recruiter/jobs');
     }
   };
 

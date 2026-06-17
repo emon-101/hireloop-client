@@ -28,7 +28,7 @@ export default function JobsTable({ jobs }) {
   return (
     <Table aria-label="Company jobs management table">
       <Table.ResizableContainer>
-        <Table.Content className="min-w-[1100px]">
+        <Table.Content className="min-w-275">
           <Table.Header>
             <Table.Column
               isRowHeader
