@@ -1,7 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { Button, Input, Card, Switch, TextArea } from "@heroui/react";
+import { Button, Input, Card, Switch } from "@heroui/react";
+import { createJob } from "@/lib/actions/jobs";
+import { toast } from "sonner";
+import { redirect } from "next/navigation";
 
 export default function NewJobForm() {
   const [isRemote, setIsRemote] = useState(false);
@@ -27,7 +30,7 @@ export default function NewJobForm() {
   const selectClass =
   "w-full rounded-lg border border-default-200 bg-white text-black dark:bg-zinc-900 dark:text-white px-4 py-3";
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
@@ -49,7 +52,12 @@ export default function NewJobForm() {
       status: "active",
     };
 
-    console.log(jobData);
+    // console.log(jobData);
+    const res = await createJob(jobData);
+    if(res.insertedId) {
+      toast.success("Job posted successfully!");
+      redirect('/dashboard/recruiter');
+    }
   };
 
   return (
