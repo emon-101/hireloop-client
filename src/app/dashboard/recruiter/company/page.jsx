@@ -13,7 +13,7 @@ const CompanyPage = async () => {
 
   return (
     <div className="mx-auto max-w-6xl p-6">
-      {!company ? (
+      {!company?._id ? (
         <NoCompanyState recruiter={recruiter} company={company} />
       ) : (
         <CompanyProfile recruiter={recruiter} company={company} />
