@@ -19,28 +19,59 @@ const industries = [
 
 const employeeRanges = ["1-10", "11-50", "51-200", "201-500", "500+"];
 
-export default function CompanyForm({recruiter, company}) {
+export default function CompanyForm({ recruiter, company }) {
   const [logoPreview, setLogoPreview] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [logoError, setLogoError] = useState("");
+  const [errors, setErrors] = useState({});
 
+  // Auxiliary Upload States
+  const [logoUrl, setLogoUrl] = useState("");
+  const [isUploading, setIsUploading] = useState(false);
 
   const selectClass =
     "w-full rounded-2xl border border-divider bg-content1 px-4 py-3 text-sm outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20 dark:bg-content1 dark:text-foreground dark:bg-zinc-900 dark:text-white";
 
-  const handleLogoChange = (e) => {
-    const file = e.target.files?.[0];
-
+  // 2. Client side Imgbb Upload Handler
+  const handleLogoUpload = async (e) => {
+    const file = e.target.files[0];
     if (!file) return;
 
-    // 5MB limit
+    // Simple Validation
     if (file.size > 5 * 1024 * 1024) {
-      setLogoError("Logo size cannot exceed 5MB.");
+      setErrors((prev) => ({ ...prev, logo: "File size exceeds 5MB limit" }));
       return;
     }
 
-    setLogoError("");
-    setLogoPreview(URL.createObjectURL(file));
+    setIsUploading(true);
+    const formData = new FormData();
+    formData.append("image", file);
+
+    try {
+      // Replace with your real IMGBB API key environmental variable injection
+      const IMGBB_API_KEY = process.env.NEXT_PUBLIC_IMAGE_UPLOAD_API;
+      const response = await fetch(
+        `https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`,
+        {
+          method: "POST",
+          body: formData,
+        },
+      );
+      const data = await response.json();
+
+      if (data.success) {
+        setLogoUrl(data.data.url);
+        setErrors((prev) => ({ ...prev, logo: null }));
+      } else {
+        setErrors((prev) => ({ ...prev, logo: "Upload failed. Try again." }));
+      }
+    } catch (err) {
+      setErrors((prev) => ({
+        ...prev,
+        logo: "Network error during logo upload",
+      }));
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -51,30 +82,6 @@ export default function CompanyForm({recruiter, company}) {
 
       const formData = new FormData(e.target);
 
-      // 1. Upload logo to ImageBB
-      const logoFile = formData.get("logo");
-      console.log(logoFile);
-
-      let logoUrl = "";
-
-      if (logoFile && logoFile.size > 0) {
-        const imageData = new FormData();
-
-        imageData.append("image", logoFile);
-
-        const uploadRes = await fetch(
-          `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMAGE_UPLOAD_API}`,
-          {
-            method: "POST",
-            body: imageData,
-          },
-        );
-
-        const uploadResult = await uploadRes.json();
-
-        logoUrl = uploadResult?.data?.url || "";
-      }
-
       // 2. Prepare company data
       const companyData = {
         companyName: formData.get("companyName"),
@@ -83,8 +90,8 @@ export default function CompanyForm({recruiter, company}) {
         location: formData.get("location"),
         employeeCount: formData.get("employeeCount"),
         description: formData.get("description"),
-        logo: logoUrl,
-        status: company ? company.status : 'pending',
+        logo: logoUrl || (company ? company.logo : ""),
+        status: company ? company.status : "pending",
         recruiterId: recruiter?.id,
       };
 
@@ -92,7 +99,7 @@ export default function CompanyForm({recruiter, company}) {
 
       const payload = await createCompany(companyData);
 
-      if(payload.insertedId) {
+      if (payload.insertedId) {
         toast.success("Company registered successfully!");
       }
     } catch (error) {
@@ -207,7 +214,7 @@ export default function CompanyForm({recruiter, company}) {
               name="logo"
               accept="image/png,image/jpeg,image/jpg,image/webp"
               className="hidden"
-              onChange={handleLogoChange}
+              onChange={handleLogoUpload}
             />
 
             {/* Clickable Upload Area */}
@@ -216,10 +223,10 @@ export default function CompanyForm({recruiter, company}) {
               className="group relative cursor-pointer"
             >
               <div className="flex h-44 w-44 items-center justify-center overflow-hidden rounded-3xl border-2 border-dashed border-divider bg-content2 transition-all duration-300 hover:border-primary hover:bg-primary/5">
-                {logoPreview ? (
+                {logoUrl ? (
                   <>
                     <Image
-                      src={logoPreview}
+                      src={logoUrl}
                       alt="Company Logo"
                       fill
                       className="object-cover"
@@ -253,7 +260,7 @@ export default function CompanyForm({recruiter, company}) {
               </p>
             </div>
 
-            {logoError && <p className="text-sm text-danger">{logoError}</p>}
+            {errors.logo && <span className="text-xs text-danger mt-1">{errors.logo}</span>}
           </div>
 
           <div className="mt-8 rounded-2xl border border-success/20 bg-success/5 p-4">
