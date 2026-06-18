@@ -20,7 +20,6 @@ const industries = [
 const employeeRanges = ["1-10", "11-50", "51-200", "201-500", "500+"];
 
 export default function CompanyForm({ recruiter, company }) {
-  const [logoPreview, setLogoPreview] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
 
