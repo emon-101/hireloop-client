@@ -6,13 +6,13 @@ import { createJob } from "@/lib/actions/jobs";
 import { toast } from "sonner";
 import { redirect } from "next/navigation";
 
-export default function NewJobForm() {
+export default function NewJobForm( {company}) {
   const [isRemote, setIsRemote] = useState(false);
-  const [mockCompany] = useState({
-    name: "Acme Corp",
-    id: "company_123",
-    isApproved: true,
-  });
+  // const [company] = useState({
+  //   name: "Acme Corp",
+  //   id: "company_123",
+  //   isApproved: true,
+  // });
 
   const jobTypes = [
     "Full-time",
@@ -39,10 +39,10 @@ export default function NewJobForm() {
   const handleSubmit = async(e) => {
     e.preventDefault();
 
-    if(!mockCompany.isApproved) {
-      toast.error("Your company profile must be approved before you can post jobs.");
-      return;
-    }
+    // if(!company.isApproved) {
+    //   toast.error("Your company profile must be approved before you can post jobs.");
+    //   return;
+    // }
 
     
 
@@ -63,7 +63,9 @@ export default function NewJobForm() {
       benefits: formData.get("benefits"),
       remote: isRemote,
       status: "active",
-      companyId: mockCompany.id,
+      companyId: company._id,
+      companyName: company?.companyName,
+      companyLogo: company?.logo,
       isPubliclyVisible: true,
     };
 
@@ -414,7 +416,7 @@ export default function NewJobForm() {
           <div className="rounded-2xl border border-divider bg-content2 p-6">
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
               <div>
-                <h3 className="text-lg font-semibold">{mockCompany.name}</h3>
+                <h3 className="text-lg font-semibold">{company?.companyName}</h3>
 
                 <p className="text-sm text-success">✓ Approved Company</p>
               </div>

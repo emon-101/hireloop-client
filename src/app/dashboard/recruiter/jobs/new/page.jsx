@@ -1,11 +1,14 @@
 
 import NewJobForm from '@/components/dashboard/recruiterDashboard/NewJobForm';
+import { getLoggedInRecruiterCompany } from '@/lib/api/companies';
 import React from 'react';
 
-const CreateNewJob = () => {
+const CreateNewJob = async() => {
+    const company = await getLoggedInRecruiterCompany();
+    console.log(company);
     return (
         <div>
-            <NewJobForm />
+            <NewJobForm company={company} />
         </div>
     );
 };
