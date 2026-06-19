@@ -107,21 +107,13 @@ export default function JobCard({ job }) {
 
       {/* Footer */}
       <div className="mt-6 flex gap-3">
-        <Button
-          as={Link}
+        <Link
           href={`/jobs/${job?._id}`}
           color="primary"
-          className="flex-1"
+          className="flex w-full bg-blue-500 rounded-full justify-center items-center font-bold py-2"
         >
           View Details
-        </Button>
-
-        <Button
-          variant="bordered"
-          color="primary"
-        >
-          Apply Now
-        </Button>
+        </Link>
       </div>
     </Card>
   );
